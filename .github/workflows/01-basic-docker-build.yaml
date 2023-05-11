@@ -1,5 +1,5 @@
 ---
-name: 01 Basic Docker Build
+name: 01 Basic Docker Build xyz
 # simplest workflow possible
 
 on:
@@ -13,13 +13,12 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
-            
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+
       - name: Docker build
         uses: docker/build-push-action@v4
         with:
