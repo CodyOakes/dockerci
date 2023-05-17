@@ -25,16 +25,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      #NEW: (START##########################################################
       - name: Build and export to Docker
         uses: docker/build-push-action@v4
         with:
           push: false
           load: true # Export to Docker Engine rather than pushing to a registry
           tags: ${{ github.run_id }}
+          target: test
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
 
+        # for simple tests (npm test, etc.) just run a local image in docker
+      - name: Unit Testing in Docker
+        run: |
+          docker run --rm ${{ github.run_id }} echo "run test commands here"
+      #NEW: (END) ############################################################
       #NEW: (START) ##########################################################
       - name: Run Trivy for all CVEs (non-blocking)
         uses: aquasecurity/trivy-action@master
@@ -52,7 +59,7 @@ jobs:
           flavor: |
             latest=false
           tags: |
-            type=raw,value=06
+            type=raw,value=08
           # comment these out on all but 04-add-metadata.yaml to avoid overwriting image tags
           # type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
           # type=ref,event=pr
