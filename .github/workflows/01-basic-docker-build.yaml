@@ -1,5 +1,5 @@
 ---
-name: 06 Build and Scan adsfasdf
+name: 06 Build and Scan
 
 on:
   push:
