@@ -1,5 +1,5 @@
 ---
-name: 06 Build and Scan
+name: 06 Build and Scan adsfasdf
 
 on:
   push:
@@ -12,18 +12,17 @@ jobs:
     name: Build Images
     runs-on: ubuntu-latest
 
-#NEW: (START) ##########################################################
+    #NEW: (START) ##########################################################
     permissions:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-#NEW: (END) ############################################################
+    #NEW: (END) ############################################################
 
     steps:
-
-    #NEW: (START) ##########################################################
+      #NEW: (START) ##########################################################
       - name: Checkout git repo
         uses: actions/checkout@v3
-#NEW: (END) ############################################################
+      #NEW: (END) ############################################################
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -46,7 +45,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
- 
+
       - name: Run Trivy for all CVEs (non-blocking)
         uses: aquasecurity/trivy-action@master
         with:
@@ -54,7 +53,7 @@ jobs:
           exit-code: 0
           format: table
 
-#NEW: (START) ##########################################################
+      #NEW: (START) ##########################################################
       - name: Run Trivy for HIGH,CRITICAL CVEs and report (blocking)
         uses: aquasecurity/trivy-action@master
         with:
@@ -65,13 +64,13 @@ jobs:
           severity: 'HIGH,CRITICAL'
           format: 'sarif'
           output: 'trivy-results.sarif'
-      
+
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
-#NEW: (END) ############################################################
+      #NEW: (END) ############################################################
 
       - name: Docker Metadata for Final Image Build
         id: docker_meta
