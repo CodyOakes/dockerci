@@ -49,7 +49,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: codyoakes/docker-ci-automation
+          images: bretfisher/docker-ci-automation
           flavor: |
             latest=false
           tags: |
