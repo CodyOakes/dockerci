@@ -21,7 +21,7 @@ jobs:
     steps:
       #NEW: (START) ##########################################################
       - name: Checkout git repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       #NEW: (END) ############################################################
 
       - name: Set up QEMU
