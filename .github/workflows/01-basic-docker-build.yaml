@@ -74,7 +74,7 @@ jobs:
 
       - name: Docker Metadata for Final Image Build
         id: docker_meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: codyoakes/docker-ci-automation
           flavor: |
